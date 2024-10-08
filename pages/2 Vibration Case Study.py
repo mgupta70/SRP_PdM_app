@@ -19,7 +19,7 @@ st.markdown('''The same principle applies to our hydro turbines. When a turbine 
 
 However, there are two significant problems with the preventive maintenance approach:
 
-1. **Unnecessary Maintenance:** Sometimes, maintenance is performed when it’s not needed. Returning to the car analogy, the car probably doesn’t need a 6-month check-up if it has not been used much. Similarly, if a hydro turbine hasn’t been operating frequently, shutting down the plant for maintenance could prove expensive.")
+1. **Unnecessary Maintenance:** Sometimes, maintenance is performed when it’s not needed. Returning to the car analogy, the car probably doesn’t need a 6-month check-up if it has not been used much. Similarly, if a hydro turbine hasn’t been operating frequently, shutting down the plant for maintenance could prove expensive.)
 
 2. **Missed Maintenance:** On the other hand, there are times when maintenance is needed before the scheduled time. For example, a turbine might start showing signs of wear before its next planned maintenance. If this issue is not addressed, it could lead to a breakdown, resulting in costly and disruptive repairs.
 
@@ -37,18 +37,18 @@ The turbine is equipped with sensors that record vibrations every second. We hav
 
 st.image("media/1.png", caption="Fig 1. Scatter plot of vibration in turbine for years 2021–2023")
 
-st.markdown('''In its current form, this graph doesn’t tell us much beyond the fact that vibrations range from 0 to 25 mils (1 mil = 1/1000 inch). We need to transform this graph using domain knowledge to reveal useful patterns.")
-### Domain Knowledge"
+st.markdown('''In its current form, this graph doesn’t tell us much beyond the fact that vibrations range from 0 to 25 mils (1 mil = 1/1000 inch). We need to transform this graph using domain knowledge to reveal useful patterns.)
+### Domain Knowledge
 
-- DK1: The turbine operates in three ON modes — Pump, Generate, and Condense. For our turbine, these modes are defined as follows:")
-    - Pump: Power < -15 MW")
-    - Generate: Power >=10 MW")
-    - Condense: -2<Power <0 MW, rpm>=50")
+- DK1: The turbine operates in three ON modes — Pump, Generate, and Condense. For our turbine, these modes are defined as follows:)
+    - Pump: Power < -15 MW)
+    - Generate: Power >=10 MW)
+    - Condense: -2<Power <0 MW, rpm>=50)
     
 - DK2: It takes about 1 minute for the turbine to reach any of the ON modes from a completely OFF state. Similarly, it takes about 30–40 seconds for the turbine to transition between ON modes.
-- DK3: The turbine is considered to be in transition when its rotational speed is less than 90% of the maximum speed."
+- DK3: The turbine is considered to be in transition when its rotational speed is less than 90% of the maximum speed.
 
-These three basic pieces of information are crucial for directing our analysis. The goal is to select a subset of points from the original data shown in Fig-1 that are similar to each other, or **homogenous**. Conceptually, vibrations during similar conditions should be the same and, if they’re not, wear and tear could be a factor responsible for that deviation.")
+These three basic pieces of information are crucial for directing our analysis. The goal is to select a subset of points from the original data shown in Fig-1 that are similar to each other, or **homogenous**. Conceptually, vibrations during similar conditions should be the same and, if they’re not, wear and tear could be a factor responsible for that deviation.)
 
 ### Data Mining: Selecting Homogeneous Points
 
@@ -76,8 +76,8 @@ What about 2022? Does the same pattern hold?''')
 
 st.image("media/5.png", caption="Fig 5.Vibration values for year 2022 colored by Quarters, revealing an upward trend")
 
-st.markdown('''Yes, it does."
-### Next Steps"
+st.markdown('''Yes, it does.
+### Next Steps
 
 Using statistical and parametric analysis, we can determine the rate of change of vibration over time. This equation will allow us to understand the current state and estimate the future state of the turbine:
 
