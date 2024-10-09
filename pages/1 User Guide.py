@@ -11,7 +11,7 @@ st.markdown('''
 
             It comprises of 42 sensors and their details (like sensor name, unit of measurement, location) is given below in a table as **Sensors Description**.
 
-            📥 You can download the data using the Google Drive link shared by me on email. Else, if you were not copied on the email, please request it from <ins> Russell Genet </ins> by emailing him.
+            📥 You can download the data using the Google Drive link shared by me on email. Else, if you were not copied on the email, please request it from Russell Genet of SRP by emailing him.
 
             The data is in pickle (.pkl) format which you can upload in the main app page for analysis.
 
