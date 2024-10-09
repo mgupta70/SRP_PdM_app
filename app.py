@@ -34,8 +34,8 @@ df = None
 # File uploader for a single .pkl file
 # uploaded_file = st.file_uploader("Upload a .pkl file. Else download data by clicking [here](https://drive.google.com/file/d/14kFHUjzUk4uSXidZ6xM_g78gqiE_bvqk/view?usp=drive_link) 📥", type='pkl', accept_multiple_files=False)
 
-uploaded_file = st.file_uploader("Upload a .pkl file. Link to data file has been shared with <a href='mailto:russell@streamlit.io'>Russell Genet</a> 📥", type='pkl', accept_multiple_files=False)
-
+st.markdown("Link to data file has been shared with <a href='mailto:russell@streamlit.io'>Russell Genet</a> from srp.", unsafe_allow_html=True)
+uploaded_file = st.file_uploader("Upload a .pkl file 📥", type='pkl', accept_multiple_files=False)
 
 if uploaded_file is not None:
     # Read the uploaded file into a DataFrame
