@@ -18,12 +18,12 @@ from src.plot_descriptions import *
 # Page config
 st.set_page_config(page_title="HPP Digital Twins", page_icon=":bar_chart:",layout="wide")
 st.title(" :bar_chart: Condition Monitoring App")
-st.markdown(
-    '''
-    ------------------------------------------------------------------------------------
-    🛠️ Created by [Mohit Gupta](https://mgupta70.github.io), Ph.D., Arizona State University || Email :email:: mgupta70@asu.edu
-    '''
-)
+# st.markdown(
+#     '''
+#     ------------------------------------------------------------------------------------
+#     🛠️ Created by [Mohit Gupta](https://mgupta70.github.io), Ph.D., Arizona State University || Email :email:: mgupta70@asu.edu
+#     '''
+# )
 st.markdown('<style>div.block-container{padding-top:3rem;}</style>',unsafe_allow_html=True)
 
 st.sidebar.image('media/srp_logo.jpg')
@@ -250,4 +250,11 @@ if df is not None:
         df_gg = get_pivot_table(filtered_df, sensor)
         fig6 = plot_daily_heatmap(df_gg, sensor)
         st.plotly_chart(fig6,use_container_width=True)
+
+st.markdown(
+    '''
+    ------------------------------------------------------------------------------------
+    🛠️ Created by [Mohit Gupta](https://mgupta70.github.io), Ph.D., Arizona State University || Email :email:: mgupta70@asu.edu
+    '''
+)
 
