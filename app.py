@@ -20,8 +20,8 @@ st.set_page_config(page_title="HPP Digital Twins", page_icon=":bar_chart:",layou
 st.title(" :bar_chart: Condition Monitoring App")
 st.markdown(
     '''
-    ------------------------------------------------------------------------------------
     :man-raising-hand: Created by [Mohit Gupta](https://mgupta70.github.io), Ph.D., Arizona State University || Email :email:: mgupta70@asu.edu
+    ------------------------------------------------------------------------------------
     '''
 )
 st.markdown('<style>div.block-container{padding-top:3rem;}</style>',unsafe_allow_html=True)
