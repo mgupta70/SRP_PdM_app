@@ -34,7 +34,15 @@ df = None
 # File uploader for a single .pkl file
 # uploaded_file = st.file_uploader("Upload a .pkl file. Else download data by clicking [here](https://drive.google.com/file/d/14kFHUjzUk4uSXidZ6xM_g78gqiE_bvqk/view?usp=drive_link) 📥", type='pkl', accept_multiple_files=False)
 
-uploaded_file = st.file_uploader("Upload a .pkl file 📥. In case you dont have data, request it by emailing to [me](mgupta70@asu.edu) or Russell Genet (Russell.Genet@srpnet.com) of SRP.", type='pkl', accept_multiple_files=False)
+st.markdown(
+    '''
+    ------------------------------------------------------------------------------------
+    Upload Data
+    '''
+)
+
+
+uploaded_file = st.file_uploader("Upload a .pkl file 📥. In case you dont have data, request it by emailing to me (mgupta70@asu.edu) or Russell Genet (Russell.Genet@srpnet.com) of SRP.", type='pkl', accept_multiple_files=False)
 
 if uploaded_file is not None:
     # Read the uploaded file into a DataFrame
