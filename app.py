@@ -18,12 +18,7 @@ from src.plot_descriptions import *
 # Page config
 st.set_page_config(page_title="HPP Digital Twins", page_icon=":bar_chart:",layout="wide")
 st.title(" :bar_chart: Condition Monitoring App")
-# st.markdown(
-#     '''
-#     ------------------------------------------------------------------------------------
-#     🛠️ Created by [Mohit Gupta](https://mgupta70.github.io), Ph.D., Arizona State University || Email :email:: mgupta70@asu.edu
-#     '''
-# )
+
 st.markdown('<style>div.block-container{padding-top:3rem;}</style>',unsafe_allow_html=True)
 
 st.sidebar.image('media/srp_logo.jpg')
@@ -42,7 +37,7 @@ st.markdown(
 )
 
 
-uploaded_file = st.file_uploader("Upload a .pkl file 📥. In case you dont have data, request it by emailing to me (mgupta70@asu.edu) or Russell Genet (Russell.Genet@srpnet.com) of SRP.", type='pkl', accept_multiple_files=False)
+uploaded_file = st.file_uploader("Upload a .pkl file 📥. In case you don't have data, request it by emailing to me (mgupta70@asu.edu) or Russell Genet (Russell.Genet@srpnet.com) of SRP.", type='pkl', accept_multiple_files=False)
 
 if uploaded_file is not None:
     # Read the uploaded file into a DataFrame
