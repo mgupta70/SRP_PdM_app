@@ -1,7 +1,7 @@
 import os
 import streamlit as st
 
-st.markdown('''Following is the user guide for utilizing a trained model to predict defects on turbine inspection images.'''
+st.markdown('''Following is the user guide for utilizing a trained model to predict defects on turbine inspection images.''')
   
 # Placeholder for the video
 video_placeholder = st.empty()
