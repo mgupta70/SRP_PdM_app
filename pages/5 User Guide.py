@@ -11,7 +11,7 @@ video_placeholder.markdown("### Video walkthrough of Running Turbine Defect Dete
 # st.video(VIDEO_URL)
 
 
-video_file = open('media/damage_detection_video.mp4', "rb")
+video_file = open('media/damage_detection_demo.mp4', "rb")
 video_bytes = video_file.read()
 
 st.video(video_bytes)
