@@ -1,6 +1,6 @@
 import os
 import streamlit as st
-from streamlit_pdf_viewer import pdf_viewer
+#from streamlit_pdf_viewer import pdf_viewer
 
 st.title("LiDAR & 360 Image Data Curation")
 st.markdown('''This sectoin describes the scan plan of LiDAR and 360 image data collection process and the link to dataset.''')
