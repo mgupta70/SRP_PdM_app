@@ -7,11 +7,11 @@ st.markdown('''Following is the user guide for utilizing a trained model to pred
 # Placeholder for the video
 video_placeholder = st.empty()
 video_placeholder.markdown("### Video walkthrough of Running Turbine Defect Detection System")
-VIDEO_URL = "https://www.dropbox.com/scl/fi/ysy73t0rv1pw3dqzv1tqt/damage_detection_demo.mp4?rlkey=nr7nv5pmfy1efeeejc2q1c5p8&dl=0"
-st.video(VIDEO_URL)
+# VIDEO_URL = "https://www.dropbox.com/scl/fi/ysy73t0rv1pw3dqzv1tqt/damage_detection_demo.mp4?rlkey=nr7nv5pmfy1efeeejc2q1c5p8&dl=0"
+# st.video(VIDEO_URL)
 
 
-video_file = open(VIDEO_URL, "rb")
+video_file = open('media/damage_detection_video.mp4', "rb")
 video_bytes = video_file.read()
 
 st.video(video_bytes)
