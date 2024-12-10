@@ -229,20 +229,76 @@ def get_m3(avg_data, year_num, sensor):
     return exceeded_days
         
 # @st.cache_data      
-def plotly_YOY_trend(df, sensor, month_name):
+# def plotly_YOY_trend(df, sensor, month_name):
     
-    custom_colors = {2020: px.colors.qualitative.Plotly[0], 
-                     2021: px.colors.qualitative.Plotly[1], 
-                     2022: px.colors.qualitative.Plotly[2], 
-                     2023: px.colors.qualitative.Plotly[3]}
+#     custom_colors = {2020: px.colors.qualitative.Plotly[0], 
+#                      2021: px.colors.qualitative.Plotly[1], 
+#                      2022: px.colors.qualitative.Plotly[2], 
+#                      2023: px.colors.qualitative.Plotly[3]}
+
+#     # Convert month name to number
+#     month_num = month_name2num[month_name]
+
+#     # Filter the dataframe for the selected month
+#     df2 = df[df['month'] == month_num].copy()
+    
+#     avg_data = df2.groupby(['year', 'day'])[['day', 'year', sensor[0]]].mean()
+
+#     # Create the line plot using Plotly Express
+#     fig = px.line(
+#         avg_data,
+#         x='day',
+#         y=sensor[0],
+#         color='year',
+#         color_discrete_map=custom_colors,  # Apply custom colors
+#         markers=True,
+#         title=f'Month - {month_name}', height=500, width = 1000
+#     )
+    
+#     # Update layout for better visualization
+#     fig.update_layout(
+#         xaxis_title='Day of Month',
+#         yaxis_title=sensors_units[sensor[0]],
+#         template='plotly_white'
+#     )
+    
+#     return fig, avg_data
+
+def plotly_YOY_trend(dataframe, sensor, month_name):
+
+    df = dataframe.copy()
+    df['year'] = df['year'].astype(int)#.astype(str)
 
     # Convert month name to number
     month_num = month_name2num[month_name]
 
     # Filter the dataframe for the selected month
-    df2 = df[df['month'] == month_num].copy()
+    df_month = df[df['month'] == month_num].copy()
+    #df_month['year'] = df_month['year'].astype(int).astype(str)
     
-    avg_data = df2.groupby(['year', 'day'])[['day', 'year', sensor[0]]].mean()
+    #avg_data = df_month.groupby(['year', 'day'])[['day', 'year', sensor[0]]].mean()
+    avg_data = df_month.groupby(['year', 'day'])[[sensor[0]]].mean().reset_index() 
+
+
+    # Generate a complete range of days for the month
+    days_range = pd.DataFrame({'day': range(1, 32)})
+
+    # Merge with the complete range for each year
+    all_days = []
+    for year in avg_data['year'].unique():
+        year_days = days_range.copy()
+        year_days['year'] = year
+        all_days.append(year_days)
+
+    full_range = pd.concat(all_days, ignore_index=True)
+
+    # Merge avg_data with the full range of days
+    avg_data = full_range.merge(avg_data, on=['year', 'day'], how='left')
+
+    # Dynamically assign colors to each year
+    unique_years = avg_data['year'].unique()
+    color_palette = px.colors.qualitative.Plotly
+    color_map_dict = {year: color_palette[i % len(color_palette)] for i, year in enumerate(sorted(unique_years))}
 
     # Create the line plot using Plotly Express
     fig = px.line(
@@ -250,10 +306,11 @@ def plotly_YOY_trend(df, sensor, month_name):
         x='day',
         y=sensor[0],
         color='year',
-        color_discrete_map=custom_colors,  # Apply custom colors
+        color_discrete_map=color_map_dict,  
         markers=True,
-        title=f'Month - {month_name}', height=500, width = 1000
+        title=f'Month - {month_name}', height=500, width = 1000,
     )
+    
     
     # Update layout for better visualization
     fig.update_layout(
