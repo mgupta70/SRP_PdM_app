@@ -113,7 +113,7 @@ def plot_sensor_data(df, sensor, is_app=True):
     sensor_color = "red"
     delta_color = "blue"
 
-    more_colors = ['aliceblue',  'aqua', 'aquamarine', 'darkturquoise', 'green', 'salmon', 'sandybrown',
+    more_colors = ['black', 'green', 'aqua', 'aquamarine', 'darkturquoise', 'salmon', 'sandybrown',
                 'seagreen', 'seashell', 'sienna']
 
     # Plot sensor values (top plot)
