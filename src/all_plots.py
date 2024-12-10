@@ -85,7 +85,7 @@ def get_same_family_sensors(sensors_list: list, sensor: str) -> tuple[list, list
 #     else:
 #         fig.show()
 
-@st.cache_data
+
 def plot_sensor_data(df, sensor, sensors_units, is_app=True):
     """
     Plot sensor data and the change in sensor values over time with breaklines for machine downtime.
