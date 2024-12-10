@@ -85,7 +85,6 @@ def get_same_family_sensors(sensors_list: list, sensor: str) -> tuple[list, list
 #     else:
 #         fig.show()
 
-
 def plot_sensor_data(df, sensor, is_app=True):
     """
     Plot sensor data and the change in sensor values over time with breaklines for machine downtime.
@@ -114,6 +113,9 @@ def plot_sensor_data(df, sensor, is_app=True):
     sensor_color = "red"
     delta_color = "blue"
 
+    more_colors = ['aliceblue',  'aqua', 'aquamarine', 'darkturquoise', 'green', 'salmon', 'sandybrown',
+                'seagreen', 'seashell', 'sienna']
+
     # Plot sensor values (top plot)
     for segment, segment_df in df.groupby("segment"):
         fig.add_trace(
@@ -138,6 +140,7 @@ def plot_sensor_data(df, sensor, is_app=True):
                         y=segment_df[sensor[idx]],
                         mode="lines",
                         name=f'{sensor[idx]}',
+                        line=dict(color=more_colors[(idx-1)%(len(more_colors))]),
                         showlegend=segment == 0  # Show legend only for the first segment of each sensor
                     ),
                     row=1, col=1
@@ -176,7 +179,6 @@ def plot_sensor_data(df, sensor, is_app=True):
     else:
         fig.show()
 
-    
 
 
 ##########
