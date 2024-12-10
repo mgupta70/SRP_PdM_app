@@ -182,11 +182,11 @@ def plot_sensor_data(df, sensor, sensors_units, is_app=True):
 ##########
 # Plot-2
 ##########
-@st.cache_data
+# @st.cache_data
 def get_m1(monthly_averages, year_num):
     return round(monthly_averages[year_num],1)
     
-@st.cache_data
+# @st.cache_data
 def get_m2(monthly_averages, year_num):
     total = 0
     count = 0
@@ -201,7 +201,7 @@ def get_m2(monthly_averages, year_num):
         m2=0
     return m2
     
-@st.cache_data
+# @st.cache_data
 def get_m3(avg_data, year_num, sensor):
     
     prev_years = []
@@ -226,7 +226,7 @@ def get_m3(avg_data, year_num, sensor):
         exceeded_days = 0
     return exceeded_days
         
-@st.cache_data      
+# @st.cache_data      
 def plotly_YOY_trend(df, sensor, month_name):
     
     custom_colors = {2020: px.colors.qualitative.Plotly[0], 
@@ -265,7 +265,7 @@ def plotly_YOY_trend(df, sensor, month_name):
 ##########
 # Plot-3
 ##########
-@st.cache_data
+# @st.cache_data
 def get_m4_m5(df, month_name, sensor):
     ''' current month average '''
     month_num = month_name2num[month_name]
@@ -284,7 +284,7 @@ def get_m4_m5(df, month_name, sensor):
     m5 = round((m4 -  np.mean(prev_mnth_avg))*100/np.mean(prev_mnth_avg),1)
     return m4, m5
 
-@st.cache_data
+# @st.cache_data
 def get_m6(avg_data, month_name, sensor):
     month_num = month_name2num[month_name]
     prev_mnths = []
@@ -310,7 +310,7 @@ def get_m6(avg_data, month_name, sensor):
 
     return exceeded_days
 
-@st.cache_data
+# @st.cache_data
 def plotly_MOM_trend(df, sensor, month_name, year_num, n_months):
     
     month_num = month_name2num[month_name]
@@ -344,7 +344,7 @@ def plotly_MOM_trend(df, sensor, month_name, year_num, n_months):
 ##########
 # Plot-4
 ##########
-@st.cache_data
+# @st.cache_data
 def filter_df(dataframe, date1, date2, conditions=None):
     ''' 
     Inputs:
@@ -379,7 +379,7 @@ def filter_df(dataframe, date1, date2, conditions=None):
 ##########
 # Plot-6
 ##########
-@st.cache_data
+# @st.cache_data
 def add_yr_month_column(df):
     yr_month = []
     for ind in range(len(df)):
