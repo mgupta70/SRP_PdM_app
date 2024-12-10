@@ -14,6 +14,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 from plotly_resampler import FigureResampler
+from statistics import mode
 
 
 @st.cache_data(show_spinner = 'Loading data...')
@@ -54,35 +55,127 @@ def get_same_family_sensors(sensors_list: list, sensor: str) -> tuple[list, list
 ##########
 # Plot-1
 ##########
-@st.cache_data
-def plot_sensor_data(df, sensor, is_app=True):
+# @st.cache_data
+# def plot_sensor_data(df, sensor, is_app=True):
     
-    delta = df[sensor].diff()
-    fig = make_subplots(rows=2, cols=1, shared_xaxes=True, vertical_spacing=0.1, 
-                        subplot_titles=(f'{sensor[0]}', 'Delta plot'), row_heights=[0.7, 0.3])
+#     delta = df[sensor].diff()
+#     fig = make_subplots(rows=2, cols=1, shared_xaxes=True, vertical_spacing=0.1, 
+#                         subplot_titles=(f'{sensor[0]}', 'Delta plot'), row_heights=[0.7, 0.3])
     
-    # Add First plot - Sensor values
-    fig.add_trace(go.Scatter(x = df.index, y=df[sensor[0]], mode = 'lines', name = 'actual', line=dict(color='red'), connectgaps=False), row=1, col=1)
+#     # Add First plot - Sensor values
+#     fig.add_trace(go.Scatter(x = df.index, y=df[sensor[0]], mode = 'lines', name = 'actual', line=dict(color='red'), connectgaps=False), row=1, col=1)
     
-    if len(sensor)>1:
-        for idx in range(1, len(sensor)):
-            fig.add_trace(go.Scatter(x = df.index, y=df[sensor[idx]], mode = 'lines', name = f'{sensor[idx]}', connectgaps=False), row=1, col=1)
+#     if len(sensor)>1:
+#         for idx in range(1, len(sensor)):
+#             fig.add_trace(go.Scatter(x = df.index, y=df[sensor[idx]], mode = 'lines', name = f'{sensor[idx]}', connectgaps=False), row=1, col=1)
         
         
-    fig.update_yaxes(title_text = f'{sensors_units[sensor[0]]}', row=1, col=1)
-    fig.update_layout(legend = dict(x = 0.01, y = 0.99, bgcolor = 'rgba(255,255,255,0.5)'))
+#     fig.update_yaxes(title_text = f'{sensors_units[sensor[0]]}', row=1, col=1)
+#     fig.update_layout(legend = dict(x = 0.01, y = 0.99, bgcolor = 'rgba(255,255,255,0.5)'))
 
-    # Add second plot - Change in Sensor values
-    fig.add_trace(go.Scatter(x=delta.index, y=delta[sensor[0]], mode='lines', name='Change in Sensor Values', line=dict(color='blue'), connectgaps=False), row=2, col=1)
-    fig.update_layout(height=600, width=800, title_text="Sensor Data and Changes Over Time")
-    fig.update_yaxes(title_text = f'{sensors_units[sensor[0]]}', row=2, col=1)
-    fig.update_xaxes(title_text = 'Time', row=2, col=1)
-    fig.update_layout(legend = dict(x = 0.01, y = 0.99, bgcolor = 'rgba(255,255,255,0.5)'))
+#     # Add second plot - Change in Sensor values
+#     fig.add_trace(go.Scatter(x=delta.index, y=delta[sensor[0]], mode='lines', name='Change in Sensor Values', line=dict(color='blue'), connectgaps=False), row=2, col=1)
+#     fig.update_layout(height=600, width=800, title_text="Sensor Data and Changes Over Time")
+#     fig.update_yaxes(title_text = f'{sensors_units[sensor[0]]}', row=2, col=1)
+#     fig.update_xaxes(title_text = 'Time', row=2, col=1)
+#     fig.update_layout(legend = dict(x = 0.01, y = 0.99, bgcolor = 'rgba(255,255,255,0.5)'))
     
+#     if is_app:
+#         return fig
+#     else:
+#         fig.show()
+
+@st.cache_data
+def plot_sensor_data(df, sensor, sensors_units, is_app=True):
+    """
+    Plot sensor data and the change in sensor values over time with breaklines for machine downtime.
+
+    Args:
+        df (pd.DataFrame): DataFrame containing the sensor data with a datetime index.
+        sensor (list): List of sensor column names to plot.
+        sensors_units (dict): Dictionary mapping sensor column names to their units.
+        is_app (bool): If True, return the Plotly figure object for app integration; otherwise, show the plot.
+
+    Returns:
+        plotly.graph_objs.Figure: The Plotly figure object (if is_app is True).
+    """
+    # Calculate time difference to identify gaps
+    df["time_diff"] = df.index.to_series().diff().dt.total_seconds().fillna(0)
+    most_common_time_gap = mode(df["time_diff"] )
+    df["segment"] = (df["time_diff"] > most_common_time_gap).cumsum()  # most_common_time_gap: default = 300 seconds aka 5 minutes
+
+    # Create a subplot
+    fig = make_subplots(
+        rows=2, cols=1, shared_xaxes=True, vertical_spacing=0.1,
+        subplot_titles=(f'{sensor[0]}', 'Delta plot'), row_heights=[0.7, 0.3]
+    )
+
+    # Define colors
+    sensor_color = "red"
+    delta_color = "blue"
+
+    # Plot sensor values (top plot)
+    for segment, segment_df in df.groupby("segment"):
+        fig.add_trace(
+            go.Scatter(
+                x=segment_df.index,
+                y=segment_df[sensor[0]],
+                mode="lines",
+                name=f'{sensor[0]}',
+                line=dict(color=sensor_color),
+                showlegend=segment == 0  # Show legend only for the first segment
+            ),
+            row=1, col=1
+        )
+
+    # Plot additional sensors if provided
+    if len(sensor) > 1:
+        for idx in range(1, len(sensor)):
+            for segment, segment_df in df.groupby("segment"):
+                fig.add_trace(
+                    go.Scatter(
+                        x=segment_df.index,
+                        y=segment_df[sensor[idx]],
+                        mode="lines",
+                        name=f'{sensor[idx]}',
+                        showlegend=segment == 0  # Show legend only for the first segment of each sensor
+                    ),
+                    row=1, col=1
+                )
+
+    # Plot change in sensor values (bottom plot)
+    delta = df[sensor[0]].diff()
+    for segment, segment_df in df.groupby("segment"):
+        fig.add_trace(
+            go.Scatter(
+                x=segment_df.index,
+                y=delta.loc[segment_df.index],
+                mode="lines",
+                name=f'Delta ({sensor[0]})',
+                line=dict(color=delta_color),
+                showlegend=segment==0  # Write False to show No legend for delta segments
+            ),
+            row=2, col=1
+        )
+
+    # Update layout and axis titles
+    fig.update_yaxes(title_text=f'{sensors_units[sensor[0]]}', row=1, col=1)
+    fig.update_yaxes(title_text=f'Change in {sensors_units[sensor[0]]}', row=2, col=1)
+    fig.update_xaxes(title_text='Time', row=2, col=1)
+
+    fig.update_layout(
+        height=600,
+        width=800,
+        title_text="Sensor Data and Changes Over Time",
+        legend=dict(x=0.01, y=0.99, bgcolor='rgba(255,255,255,0.5)')
+    )
+
+    # Return or show the figure
     if is_app:
         return fig
     else:
         fig.show()
+
     
 
 
