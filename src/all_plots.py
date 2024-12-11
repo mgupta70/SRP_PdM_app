@@ -191,19 +191,34 @@ def get_m1(monthly_averages, year_num):
     
     
 # @st.cache_data
+# def get_m2(monthly_averages, year_num):
+#     total = 0
+#     count = 0
+#     if year_num in monthly_averages.keys():
+#         for yr in monthly_averages:
+#             if yr < year_num:
+#                 total+=monthly_averages[yr]
+#                 count+=1
+#         if count>0:
+#             prev_yr_avg = total/count
+#             m2 = round((monthly_averages[year_num] - prev_yr_avg)*100/prev_yr_avg,1)
+#         else:
+#             m2=0
+#         return m2
+
 def get_m2(monthly_averages, year_num):
-    total = 0
-    count = 0
-    for yr in monthly_averages:
-        if yr < year_num:
-            total+=monthly_averages[yr]
-            count+=1
-    if count>0:
-        prev_yr_avg = total/count
-        m2 = round((monthly_averages[year_num] - prev_yr_avg)*100/prev_yr_avg,1)
-    else:
-        m2=0
-    return m2
+    
+    if year_num in monthly_averages.keys():
+        total = 0
+        count = 0
+        for yr in monthly_averages.keys():
+            if yr < year_num:
+                total+=monthly_averages[yr]
+                count+=1
+        if count>0:
+            prev_yr_avg = total/count
+            m2 = round((monthly_averages[year_num] - prev_yr_avg)*100/prev_yr_avg,1)
+    return -999
     
 # @st.cache_data
 
