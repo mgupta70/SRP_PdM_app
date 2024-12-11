@@ -108,12 +108,12 @@ if df is not None:
             st.markdown(f"{yoy_plot_description}")
         if sensor and month_name:        
             ## Plotly
-            fig2, avg_data = plotly_YOY_trend(df, sensor, month_name)
+            fig2, avg_data = plotly_YOY_trend(df, sensor, month_name) # avg_data is df with daily average data of every year for given month
             st.plotly_chart(fig2,use_container_width=True)
             
             monthly_averages = {}
             for yr in avg_data.year.unique():
-                monthly_averages[yr] = df[df['year'] == yr][sensor[0]].mean()
+                monthly_averages[yr] = avg_data[avg_data['year'] == yr][sensor[0]].mean()
                 #monthly_averages[yr] = avg_data.loc[yr][sensor[0]].mean()
                 
             m1_value = get_m1(monthly_averages, year_num)
