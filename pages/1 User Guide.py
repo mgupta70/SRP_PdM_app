@@ -30,8 +30,12 @@ video_placeholder = st.empty()
 
 # Optional: Show a message or image as a placeholder
 video_placeholder.markdown("### Video walkthrough of the app :film_projector:")
-VIDEO_URL = "https://www.youtube.com/watch?v=HcRm0ILFHzw&ab_channel=KTARNews"
-st.video(VIDEO_URL)
+# VIDEO_URL = "https://www.youtube.com/watch?v=HcRm0ILFHzw&ab_channel=KTARNews"
+# st.video(VIDEO_URL)
+video_file = open('media/condition_monitoring.mp4', "rb")
+video_bytes = video_file.read()
+
+st.video(video_bytes)
 
 st.markdown('''In order to use app for custom data, feel free to modify the app. The source code should be visible to everyone at SRP.''')
 
