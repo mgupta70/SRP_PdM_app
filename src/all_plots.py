@@ -218,6 +218,7 @@ def get_m2(monthly_averages, year_num):
         if count>0:
             prev_yr_avg = total/count
             m2 = round((monthly_averages[year_num] - prev_yr_avg)*100/prev_yr_avg,1)
+        return m2
     return -999
     
 # @st.cache_data
