@@ -17,13 +17,13 @@ from plotly_resampler import FigureResampler
 from statistics import mode
 
 
-@st.cache_data(show_spinner = 'Loading data...')
+# @st.cache_data(show_spinner = 'Loading data...')
 def load_data(fpth):
     df = pd.read_pickle(fpth)
     return df
 
 
-@st.cache_data(show_spinner=False)
+# @st.cache_data(show_spinner=False)
 def get_df_bw_time(df: pd.DataFrame, start_date: str, end_date: str, include_last_day: bool = False) -> pd.DataFrame:
     """
     Retrieves a subset of the dataframe between two dates.
@@ -35,7 +35,7 @@ def get_df_bw_time(df: pd.DataFrame, start_date: str, end_date: str, include_las
     return df[start_date:end_date].copy()
     
     
-@st.cache_data(show_spinner=False)
+# @st.cache_data(show_spinner=False)
 def get_same_family_sensors(sensors_list: list, sensor: str) -> tuple[list, list]:
     """
     Identifies sensors from the same family based on the provided sensor string.
@@ -470,7 +470,7 @@ def add_yr_month_column(df):
     df['year_month'] = yr_month
     return df
 
-@st.cache_data
+# @st.cache_data
 def drop_rows(df, n, from_top=True):
     if from_top:
         df.drop(df.head(n).index, inplace = True)
@@ -478,7 +478,7 @@ def drop_rows(df, n, from_top=True):
         df.drop(df.tail(n).index, inplace = True)
     return df
 
-@st.cache_data
+# @st.cache_data
 def get_empty_pivot_table(df):
     # prepare an empty df_gg with all year_months and days
     df_gg = pd.DataFrame(columns=['year_month', 'day'])
@@ -498,7 +498,7 @@ def get_empty_pivot_table(df):
     df_gg['day'] = df_gg['day'].astype(float)
     return df_gg
 
-@st.cache_data
+# @st.cache_data
 def get_pivot_table(df, sensor):
     df = add_yr_month_column(df)
     df_grouped = df.groupby(['year_month', 'day']).agg({sensor[0]: 'mean'}).reset_index()
@@ -514,7 +514,7 @@ def get_pivot_table(df, sensor):
     df_gg[sensor[0]] = values
     return df_gg
 
-@st.cache_data
+# @st.cache_data
 def plot_daily_heatmap(df_gg, sensor):
     data = [go.Heatmap(
         x=df_gg['year_month'],
