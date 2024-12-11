@@ -186,7 +186,9 @@ def plot_sensor_data(df, sensor, is_app=True):
 ##########
 # @st.cache_data
 def get_m1(monthly_averages, year_num):
-    return round(monthly_averages[year_num],1)
+    # return round(monthly_averages[year_num],1)
+    return round(monthly_averages.get(year_num, -999), 1) # returns -999 if not valid
+    
     
 # @st.cache_data
 def get_m2(monthly_averages, year_num):
