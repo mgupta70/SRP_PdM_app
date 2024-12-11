@@ -204,6 +204,7 @@ def get_m2(monthly_averages, year_num):
     return m2
     
 # @st.cache_data
+
 def get_m3(avg_data, year_num, sensor):
     
     prev_years = []
@@ -212,8 +213,12 @@ def get_m3(avg_data, year_num, sensor):
             prev_years.append(yr)
 
     if len(prev_years)>0:
-        baseline_max_daily = avg_data.loc[prev_years].groupby(level='day')[sensor[0]].max()
-        current_avg_daily = avg_data.loc[year_num][sensor[0]]
+
+        # baseline_max_daily = avg_data.loc[prev_years].groupby(level='day')[sensor[0]].max()
+        # current_avg_daily = avg_data.loc[year_num][sensor[0]]
+
+        baseline_max_daily = avg_data[avg_data['year'].isin(prev_years)].groupby('day')[sensor[0]].max()
+        current_avg_daily = avg_data[avg_data['year'] == year_num].set_index('day')[sensor[0]]
 
         if len(baseline_max_daily)==len(current_avg_daily):
             exceeded_days = (current_avg_daily > baseline_max_daily).sum()
@@ -221,12 +226,12 @@ def get_m3(avg_data, year_num, sensor):
             common_days = baseline_max_daily.index.intersection(current_avg_daily.index)
             baseline_max_daily_common = baseline_max_daily.loc[common_days]
             current_avg_daily_common = current_avg_daily.loc[common_days]
-
             exceeded_days = (current_avg_daily_common > baseline_max_daily_common).sum()
 
     else:
         exceeded_days = 0
     return exceeded_days
+    
         
 # @st.cache_data      
 # def plotly_YOY_trend(df, sensor, month_name):
