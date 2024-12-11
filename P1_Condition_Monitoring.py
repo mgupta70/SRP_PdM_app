@@ -150,7 +150,7 @@ if df is not None:
             col_left, col_right = st.columns(2)
         
             with col_left:
-                st.metric(label='Monthly average', value=f'{m4_value} {sensors_units[sensor[0]]}', delta=f'{m5_value} {sensors_units[sensor[0]]}')
+                st.metric(label='Monthly average', value=f'{m4_value} {sensors_units[sensor[0]]}', delta=f'{m5_value} %')
 
             with col_right:
                 st.metric(label='Daily average exceeds', value=f'{m6_value} Days', delta=None)
