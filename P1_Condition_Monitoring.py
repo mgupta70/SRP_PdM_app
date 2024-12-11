@@ -39,6 +39,8 @@ st.markdown(
 
 uploaded_file = st.file_uploader("Upload a .pkl file 📥. In case you don't have data, request it by emailing to me (mgupta70@asu.edu) or Russell Genet (Russell.Genet@srpnet.com) of SRP.", type='pkl', accept_multiple_files=False)
 
+anomaly_file = st.file_uploader("Upload .pkl file 📥 for the results file of anomaly detection.", type='pkl', accept_multiple_files=False)
+
 if uploaded_file is not None:
     # Read the uploaded file into a DataFrame
     try:
@@ -164,7 +166,45 @@ if df is not None:
         with st.expander('Plot shows the true value on x-axis and corresponding predicted value on y-axis. For more information - Click here'):
             st.markdown(f"{psuedo_sensor_plot_description}")
         if sensor:
-            st.image("media/lock.png")
+            if anomaly_file is not None:
+                df_reconstructed = pd.read_pickle(anomaly_file)
+                
+                original_values = df[sensor[0]]
+                reconstructed_values = df_reconstructed[sensor[0]]
+                
+                # Create a scatter plot
+                fig4 = px.scatter(
+                    x=original_values,
+                    y=reconstructed_values,
+                    labels={"x": "Original Values", "y": "Reconstructed Values"},
+                    title=f"Original vs Predicted Values for {sensor[0]}",
+                    opacity=0.1
+                )
+                
+                # Update layout for better visualization
+                fig4.update_layout(
+                    xaxis_title="Original Values",
+                    yaxis_title="Predicted Values",
+                    title_x=0.5  # Center the title
+                )
+                
+                # Add a line y = x for ideal behavior
+                fig4.add_trace(
+                    go.Scatter(
+                        x=original_values,
+                        y=original_values,
+                        mode='lines',
+                        name='Ideal Behavior (y=x)',
+                        line=dict(color='red', dash='dash', width=2),
+                        opacity=1.0
+                        
+                    )
+                )
+                st.plotly_chart(fig4,use_container_width=True)
+                                
+
+            else:               
+                st.image("media/lock.png")
 
 
     ##########
