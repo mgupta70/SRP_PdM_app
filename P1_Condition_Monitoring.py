@@ -113,7 +113,8 @@ if df is not None:
             
             monthly_averages = {}
             for yr in avg_data.year.unique():
-                monthly_averages[yr] = avg_data.loc[yr][sensor[0]].mean()
+                monthly_averages[yr] = df[df['year'] == yr][sensor[0]].mean()
+                #monthly_averages[yr] = avg_data.loc[yr][sensor[0]].mean()
                 
             m1_value = get_m1(monthly_averages, year_num)
             m2_value = get_m2(monthly_averages, year_num)
