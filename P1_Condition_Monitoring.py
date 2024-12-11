@@ -174,11 +174,25 @@ if df is not None:
                 
                 # Create a scatter plot
                 fig4 = px.scatter(
+                    df,
                     x=original_values,
                     y=reconstructed_values,
                     labels={"x": "Original Values", "y": "Reconstructed Values"},
                     title=f"Original vs Predicted Values for {sensor[0]}",
-                    opacity=0.1
+                    opacity=0.1,
+                )
+                
+                # Add custom data (year, month, day, hour) for the hover tooltip
+                fig4.update_traces(
+                    customdata=df[['year', 'month', 'day', 'hour']],
+                
+                    hovertemplate=(
+                        "Year: %{customdata[0]}<br>" +
+                        "Month: %{customdata[1]}<br>" +
+                        "Day: %{customdata[2]}<br>" +
+                        "Hour: %{customdata[3]}<br>" +
+                        "<extra></extra>"  # Remove default x and y values
+                    )
                 )
                 
                 # Update layout for better visualization
