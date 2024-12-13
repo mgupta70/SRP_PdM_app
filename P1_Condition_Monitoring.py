@@ -166,59 +166,61 @@ if df is not None:
         with st.expander('Plot shows the true value on x-axis and corresponding predicted value on y-axis. For more information - Click here'):
             st.markdown(f"{psuedo_sensor_plot_description}")
         if sensor:
-            if anomaly_file is not None:
-                df_reconstructed = pd.read_pickle(anomaly_file)
+            st.image("media/lock.png")
+            ## Recheck and modify
+            # if anomaly_file is not None:
+            #     df_reconstructed = pd.read_pickle(anomaly_file)
                 
-                original_values = df[sensor[0]]
-                reconstructed_values = df_reconstructed[sensor[0]]
+            #     original_values = df[sensor[0]]
+            #     reconstructed_values = df_reconstructed[sensor[0]]
                 
-                # Create a scatter plot
-                fig4 = px.scatter(
-                    df,
-                    x=original_values,
-                    y=reconstructed_values,
-                    labels={"x": "Original Values", "y": "Reconstructed Values"},
-                    title=f"Original vs Predicted Values for {sensor[0]}",
-                    opacity=0.1,
-                )
+            #     # Create a scatter plot
+            #     fig4 = px.scatter(
+            #         df,
+            #         x=original_values,
+            #         y=reconstructed_values,
+            #         labels={"x": "Original Values", "y": "Reconstructed Values"},
+            #         title=f"Original vs Predicted Values for {sensor[0]}",
+            #         opacity=0.1,
+            #     )
                 
-                # Add custom data (year, month, day, hour) for the hover tooltip
-                fig4.update_traces(
-                    customdata=df[['year', 'month', 'day', 'hour']],
+            #     # Add custom data (year, month, day, hour) for the hover tooltip
+            #     fig4.update_traces(
+            #         customdata=df[['year', 'month', 'day', 'hour']],
                 
-                    hovertemplate=(
-                        "Year: %{customdata[0]}<br>" +
-                        "Month: %{customdata[1]}<br>" +
-                        "Day: %{customdata[2]}<br>" +
-                        "Hour: %{customdata[3]}<br>" +
-                        "<extra></extra>"  # Remove default x and y values
-                    )
-                )
+            #         hovertemplate=(
+            #             "Year: %{customdata[0]}<br>" +
+            #             "Month: %{customdata[1]}<br>" +
+            #             "Day: %{customdata[2]}<br>" +
+            #             "Hour: %{customdata[3]}<br>" +
+            #             "<extra></extra>"  # Remove default x and y values
+            #         )
+            #     )
                 
-                # Update layout for better visualization
-                fig4.update_layout(
-                    xaxis_title="Original Values",
-                    yaxis_title="Predicted Values",
-                    title_x=0.5  # Center the title
-                )
+            #     # Update layout for better visualization
+            #     fig4.update_layout(
+            #         xaxis_title="Original Values",
+            #         yaxis_title="Predicted Values",
+            #         title_x=0.5  # Center the title
+            #     )
                 
-                # Add a line y = x for ideal behavior
-                fig4.add_trace(
-                    go.Scatter(
-                        x=original_values,
-                        y=original_values,
-                        mode='lines',
-                        name='Ideal Behavior (y=x)',
-                        line=dict(color='red', dash='dash', width=2),
-                        opacity=1.0
+            #     # Add a line y = x for ideal behavior
+            #     fig4.add_trace(
+            #         go.Scatter(
+            #             x=original_values,
+            #             y=original_values,
+            #             mode='lines',
+            #             name='Ideal Behavior (y=x)',
+            #             line=dict(color='red', dash='dash', width=2),
+            #             opacity=1.0
                         
-                    )
-                )
-                st.plotly_chart(fig4,use_container_width=True)
+            #         )
+            #     )
+            #     st.plotly_chart(fig4,use_container_width=True)
                                 
 
-            else:               
-                st.image("media/lock.png")
+            # else:               
+            #     st.image("media/lock.png")
 
 
     ##########
